@@ -52,6 +52,24 @@ export const tokenizer = (input: string): Token[] => {
       continue;
     }
 
+    if (char === '"') {
+      console.log('detected char "');
+
+      let value = "";
+      char = input[++cursorPosition];
+
+      while (char !== '"') {
+        console.log("char -> ", char);
+
+        value += char;
+        char = input[++cursorPosition];
+      }
+      cursorPosition++;
+
+      tokens.push({ type: "StringLiteral", value });
+      continue;
+    }
+
     if (NUMBER.test(char)) {
       let value = "";
 

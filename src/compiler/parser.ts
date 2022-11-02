@@ -8,6 +8,8 @@ import {
   NumericLiteralNode,
   NumericLiteralToken,
   Program,
+  StringLiteralNode,
+  StringLiteralToken,
   Token,
 } from "./types";
 
@@ -21,6 +23,10 @@ export const parser = (tokens: Token[]) => {
 
     if (token.type === "Identifier") {
       return parseCallExpression(token);
+    }
+
+    if (token.type === "StringLiteral") {
+      return parseStringLiteral(token);
     }
 
     if (token.type === "NumericLiteral") {
@@ -81,6 +87,15 @@ export const parser = (tokens: Token[]) => {
 
     return {
       type: "NumericLiteral",
+      value: token.value,
+    };
+  }
+
+  function parseStringLiteral(token: StringLiteralToken): StringLiteralNode {
+    current++;
+
+    return {
+      type: "StringLiteral",
       value: token.value,
     };
   }

@@ -5,6 +5,7 @@ import {
   Node,
   NumericLiteralNode,
   Program,
+  StringLiteralNode,
 } from "./types";
 
 export function emitter(program: Program): string {
@@ -12,6 +13,8 @@ export function emitter(program: Program): string {
     switch (node.type) {
       case "NumericLiteral":
         return emitNumericLiteral(node);
+      case "StringLiteral":
+        return emitStringLiteral(node);
       case "BinaryExpression":
         return emitBinaryExpression(node);
       case "CallExpression":
@@ -23,6 +26,10 @@ export function emitter(program: Program): string {
 
   function emitNumericLiteral(node: NumericLiteralNode): string {
     return node.value;
+  }
+
+  function emitStringLiteral(node: StringLiteralNode): string {
+    return `"${node.value}"`;
   }
 
   function emitBinaryExpression(node: BinaryExpressionNode): string {
