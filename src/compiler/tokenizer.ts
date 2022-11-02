@@ -53,14 +53,10 @@ export const tokenizer = (input: string): Token[] => {
     }
 
     if (char === '"') {
-      console.log('detected char "');
-
       let value = "";
       char = input[++cursorPosition];
 
       while (char !== '"') {
-        console.log("char -> ", char);
-
         value += char;
         char = input[++cursorPosition];
       }

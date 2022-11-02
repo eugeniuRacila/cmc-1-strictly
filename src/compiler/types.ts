@@ -3,6 +3,7 @@ export type OpenParenToken = { type: "OpenParenToken" };
 export type CloseParenToken = { type: "CloseParenToken" };
 export type NumericLiteralToken = { type: "NumericLiteral"; value: string };
 export type StringLiteralToken = { type: "StringLiteral"; value: string };
+export type EqualsToken = { type: "EqualsToken" };
 export type PlusToken = { type: "PlusToken" };
 export type MinusToken = { type: "MinusToken" };
 export type AsteriskToken = { type: "AsteriskToken" };
@@ -14,6 +15,7 @@ export type Token =
   | CloseParenToken
   | NumericLiteralToken
   | StringLiteralToken
+  | EqualsToken
   | PlusToken
   | MinusToken
   | AsteriskToken
@@ -25,6 +27,11 @@ export type MultiplicativeOperator = AsteriskToken | SlashToken;
 export type NumericLiteralNode = { type: "NumericLiteral"; value: string };
 export type StringLiteralNode = { type: "StringLiteral"; value: string };
 
+export type VariableDeclarationNode = {
+  type: "VariableDeclaration";
+  identifier: IdentifierToken;
+  initializer: Node;
+};
 export type CallExpressionNode = {
   type: "CallExpression";
   identifier: IdentifierToken;
