@@ -1,3 +1,4 @@
+import { getBinaryExpressionOperatorToken } from "../utils/operator";
 import {
   BinaryExpressionNode,
   CallExpressionNode,
@@ -25,13 +26,13 @@ export function emitter(program: Program): string {
   }
 
   function emitBinaryExpression(node: BinaryExpressionNode): string {
-    return `${emit(node.left)} ${
-      node.operator.type === "PlusToken" ? "+" : "-"
-    } ${emit(node.right)}`;
+    return `${emit(node.left)} ${getBinaryExpressionOperatorToken(
+      node.operator
+    )} ${emit(node.right)}`;
   }
 
   function emitCallExpression(node: CallExpressionNode): string {
-    if (node.identifier.value === "log") {
+    if (node.identifier.value === "show") {
       return `console.log(${emit(node.argument)})`;
     }
 

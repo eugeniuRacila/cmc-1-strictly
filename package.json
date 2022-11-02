@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start:lib": "ts-node lib examples/test.sticky",
-    "start:src": "ts-node src/compiler examples/test.sticky"
+    "start": "ts-node src examples/test.sticky",
+    "start:exec": "ts-node src examples/test.sticky --run"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

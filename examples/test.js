@@ -1,1 +1,1 @@
-console.log(110 + 3 - 4)
+console.log(1 + 3 * 4)

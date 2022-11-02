@@ -3,6 +3,7 @@ import {
   BinaryExpressionNode,
   CallExpressionNode,
   IdentifierToken,
+  MultiplicativeOperator,
   Node,
   NumericLiteralNode,
   NumericLiteralToken,
@@ -25,7 +26,12 @@ export const parser = (tokens: Token[]) => {
     if (token.type === "NumericLiteral") {
       const next = tokens[current + 1];
 
-      if (next?.type === "PlusToken" || next?.type === "MinusToken") {
+      if (
+        next?.type === "PlusToken" ||
+        next?.type === "MinusToken" ||
+        next?.type === "AsteriskToken" ||
+        next?.type === "SlashToken"
+      ) {
         return parseBinaryExpression(token, next);
       } else {
         return parseNumericLiteral(token);
@@ -37,7 +43,7 @@ export const parser = (tokens: Token[]) => {
 
   function parseBinaryExpression(
     token: NumericLiteralToken,
-    next: AdditiveOperator
+    next: AdditiveOperator | MultiplicativeOperator
   ): BinaryExpressionNode {
     const left = parseNumericLiteral(token);
 

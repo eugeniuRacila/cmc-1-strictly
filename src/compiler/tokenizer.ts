@@ -10,8 +10,6 @@ export const tokenizer = (input: string): Token[] => {
   while (cursorPosition < input.length) {
     char = input[cursorPosition];
 
-    console.log(`Index :: ${cursorPosition}, Char :: ${char}`);
-
     // Whitespace
     if (WHITE_SPACE.test(char)) {
       cursorPosition++;
@@ -38,6 +36,18 @@ export const tokenizer = (input: string): Token[] => {
 
     if (char === "-") {
       tokens.push({ type: "MinusToken" });
+      cursorPosition++;
+      continue;
+    }
+
+    if (char === "*") {
+      tokens.push({ type: "AsteriskToken" });
+      cursorPosition++;
+      continue;
+    }
+
+    if (char === "/") {
+      tokens.push({ type: "SlashToken" });
       cursorPosition++;
       continue;
     }
