@@ -24,6 +24,10 @@ export type Token =
 export type AdditiveOperator = PlusToken | MinusToken;
 export type MultiplicativeOperator = AsteriskToken | SlashToken;
 
+export type IdentifierLiteralNode = {
+  type: "IdentifierLiteral";
+  value: string;
+};
 export type NumericLiteralNode = { type: "NumericLiteral"; value: string };
 export type StringLiteralNode = { type: "StringLiteral"; value: string };
 
@@ -45,9 +49,11 @@ export type BinaryExpressionNode = {
 };
 
 export type Node =
+  | IdentifierLiteralNode
   | BinaryExpressionNode
   | CallExpressionNode
   | NumericLiteralNode
-  | StringLiteralNode;
+  | StringLiteralNode
+  | VariableDeclarationNode;
 
 export type Program = { body: Node[] };

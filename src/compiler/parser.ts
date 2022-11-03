@@ -1,7 +1,9 @@
+import { Identifier } from "typescript";
 import {
   AdditiveOperator,
   BinaryExpressionNode,
   CallExpressionNode,
+  IdentifierLiteralNode,
   IdentifierToken,
   MultiplicativeOperator,
   Node,
@@ -11,6 +13,7 @@ import {
   StringLiteralNode,
   StringLiteralToken,
   Token,
+  VariableDeclarationNode,
 } from "./types";
 
 export const parser = (tokens: Token[]) => {
@@ -20,9 +23,23 @@ export const parser = (tokens: Token[]) => {
 
   function parse(): Node {
     const token = tokens[current];
+    const next = tokens[current + 1];
 
     if (token.type === "Identifier") {
-      return parseCallExpression(token);
+      if (next?.type === "EqualsToken") {
+        const initializer = tokens[current + 2];
+        if (
+          initializer?.type === "NumericLiteral" ||
+          initializer?.type === "StringLiteral"
+        ) {
+          return parseVariableDeclaration(token, initializer);
+        }
+      }
+      if (next?.type === "OpenParenToken") {
+        return parseCallExpression(token);
+      } else {
+        return parseIdentifierLiteral(token);
+      }
     }
 
     if (token.type === "StringLiteral") {
@@ -30,8 +47,6 @@ export const parser = (tokens: Token[]) => {
     }
 
     if (token.type === "NumericLiteral") {
-      const next = tokens[current + 1];
-
       if (
         next?.type === "PlusToken" ||
         next?.type === "MinusToken" ||
@@ -82,6 +97,17 @@ export const parser = (tokens: Token[]) => {
     return { type: "CallExpression", identifier, argument };
   }
 
+  function parseIdentifierLiteral(
+    token: IdentifierToken
+  ): IdentifierLiteralNode {
+    current++;
+
+    return {
+      type: "IdentifierLiteral",
+      value: token.value,
+    };
+  }
+
   function parseNumericLiteral(token: NumericLiteralToken): NumericLiteralNode {
     current++;
 
@@ -97,6 +123,20 @@ export const parser = (tokens: Token[]) => {
     return {
       type: "StringLiteral",
       value: token.value,
+    };
+  }
+
+  function parseVariableDeclaration(
+    token: IdentifierToken,
+    initializer: NumericLiteralToken | StringLiteralToken
+  ): VariableDeclarationNode {
+    const identifier = token;
+    current += 3;
+
+    return {
+      type: "VariableDeclaration",
+      identifier,
+      initializer,
     };
   }
 

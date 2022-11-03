@@ -4,6 +4,10 @@
   "main": "src/compiler/index.ts",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.22.0"
+  },
   "scripts": {
     "start": "ts-node src examples/test.sticky",
     "start:exec": "ts-node src examples/test.sticky --run"

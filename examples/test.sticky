@@ -1,1 +1,3 @@
-show("sup")
+a = "absofuckinlutely."
+show(a)
+shine(a)

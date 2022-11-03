@@ -16,6 +16,12 @@ export const tokenizer = (input: string): Token[] => {
       continue;
     }
 
+    if (char === "=") {
+      tokens.push({ type: "EqualsToken" });
+      cursorPosition++;
+      continue;
+    }
+
     if (char === "(") {
       tokens.push({ type: "OpenParenToken" });
       cursorPosition++;
